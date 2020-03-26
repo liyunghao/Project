@@ -24,8 +24,6 @@ class fatTree(Topo):
         Topo.__init__(self)
         self.createTopo()
 
-
-
     def createTopo():
         self.createCoreLayer(self.coreSwitchNum)
         self.createAggreLayer(self.aggreSwitchNum)
@@ -34,8 +32,26 @@ class fatTree(Topo):
 
     def _addSwitch(self, NUM, level, switchList):
         for x in range(1, NUM+1):
-            prefix = 
-
+            prefix = level + '00'
+            if x >= int(10):
+                prefix = level + '0'
+            switchList.append(self.addSwitch(prefix + str(x)))
 
     def createCoreLayer(self, NUM):
+        for x in range(1, NUM+1):
+            self._addSwitch(NUM, 'Core', self.coreLayer)
+    
+    def createAggreLayer(self, NUM):
+        for x in range(1, NUM+1):
+            self._addSwitch(NUM, 'Aggre', self.aggreLayer)
 
+    def createEdgeLayer(self, NUM):
+        for x in range(1, NUM+1):
+            self._addSwitch(NUM, 'Edge', self.edgeLayer)   
+
+    def createHost(self, NUM):
+        for x in range(1, NUM+1):
+            prefix = 'Host00'
+            if x >= int(10):
+                prefix = 'Host0'
+            self.hosts.append(self.addHost(prefix + str(x)))
